@@ -24,9 +24,17 @@ def get_shop_list_by_dishes(dishes, person_count):
         for dish_book in cook_book:
             if dish == dish_book:
                 for ingredient in cook_book[dish]:
-                    dict_ingredients[ingredient['ingredient_name']] = {'measure': ingredient['measure'],
-                                                                       'quantity': int(
-                                                                           ingredient['quantity']) * person_count}
+                    # print(ingredient['ingredient_name'])
+                    if ingredient['ingredient_name'] not in dict_ingredients:   #проверка повтора ингридиента
+                        dict_ingredients[ingredient['ingredient_name']] = {'measure': ingredient['measure'],
+                                                                           'quantity': int(
+                                                                               ingredient['quantity']) * person_count}
+                    else:
+                        dict_ingredients[ingredient['ingredient_name']] = {'measure': ingredient['measure'],
+                                                                           'quantity': dict_ingredients[ingredient[
+                                                                               'ingredient_name']]['quantity'] + int(
+                                                                               ingredient['quantity']) * person_count}
+
     return dict_ingredients
 
 
@@ -50,4 +58,4 @@ print('Задача 1:')
 print(cook_book)
 
 print('Задача 2:')
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
